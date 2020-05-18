@@ -30,7 +30,7 @@
                     <span class="subtitle is-5 has-text-white">BusinessCalculators.com</span>
                 </a>
 
-                <div class="navbar-burger burger" data-target="navbarCalc">
+                <div class="navbar-burger burger" onclick="document.querySelector('.navbar-menu').classList.toggle('is-active');">
                     <span></span>
                     <span></span>
                     <span></span>
@@ -148,7 +148,7 @@
                                             <div class="field">
                                                 <div class="control has-icons-left">
                                                     <input v-model="years" class="input">
-                                                    <span class="icon is-small is-right">
+                                                    <span class="icon is-small is-left">
                                                         <i class="fa fa-calendar-alt"></i>
                                                     </span>
                                                 </div>
