@@ -1,0 +1,265 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Business Calculators</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.8.2/css/bulma.min.css">
+    <script defer src="https://use.fontawesome.com/releases/v5.3.1/js/all.js"></script>
+
+    <script src="https://unpkg.com/vue"></script>
+    <style>
+        .navbar-dropdown {
+            left: calc(-40%);
+        }
+
+    </style>
+
+</head>
+
+<body>
+    <div id="vue-target">
+        <!--header with drop down menu for diferent calculators-->
+        <nav class="navbar is-link" role="navigation" aria-label="main navigation">
+            <div class="navbar-brand">
+                <a class="navbar-item" href="index.html">
+                    <i class="fa fa-calculator"></i>&nbsp;&nbsp;
+
+                    <!--                    <img src="logo.png" width="45" height="55">-->
+                    <span class="subtitle is-5 has-text-white">BusinessCalculators.com</span>
+                </a>
+
+                <div class="navbar-burger burger" data-target="navbarCalc">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </div>
+            </div>
+
+            <div id="navbarCalc" class="navbar-menu">
+                <div class="navbar-end">
+                    <div class="navbar-item has-dropdown is-hoverable">
+                        <a class="navbar-link">
+                            <span class="subtitle is-5 has-text-white">Calculators</span>
+                        </a>
+                        <div class="navbar-dropdown is-boxed">
+                            <a class="navbar-item" href="SimpleLoan.html">
+                                Simple Loan
+                            </a>
+                            <a class="navbar-item" href="BondYTM.html">
+                                Yield to Maturity
+                            </a>
+                            <a class="navbar-item">
+                                Calculator A
+                            </a>
+                            <a class="navbar-item">
+                                Calculator B
+                            </a>
+                            <hr class="navbar-divider">
+                            <a class="navbar-item" href="index.html">
+                                Home
+                            </a>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </nav>
+
+
+        <!--calculator-->
+        <section class="section">
+            <div class="level">
+                <div class="container">
+
+                    <div class="content">
+                        <h1>Simple Loan Calculator</h1>
+                        <div class="subtitle">
+                            The Simple Loan Calculator will determine your estimated loan payments.
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="container">
+                <div class="columns">
+                    <div class="column is-one-half ">
+                        <div class="box has-background-light">
+                            <div class="">
+                                <div class="level">
+                                    <!-- Left side -->
+                                    <div class="level-left is-marginless">
+                                        <div class="level-item">
+                                            Loan Amount
+                                        </div>
+                                    </div>
+
+                                    <!-- Loan Amount Input -->
+                                    <div class="level-right">
+                                        <div class="level-item">
+                                            <div class="field">
+                                                <div class="control has-icons-left">
+                                                    <input v-model="principle" class="input">
+                                                    <span class="icon is-small is-left">
+                                                        <i class="fa fa-dollar-sign"></i>
+                                                    </span>
+
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="level">
+                                    <!-- Left side -->
+                                    <div class="level-left is-marginless">
+                                        <div class="level-item">
+                                            <!--                        <p class="number">2</p>-->
+                                            Annual Interest Rate
+                                        </div>
+                                    </div>
+
+                                    <!-- Intrest rate Input -->
+                                    <div class="level-right">
+                                        <div class="level-item">
+                                            <div class="field">
+                                                <div class="control has-icons-right">
+                                                    <input v-model="interest" class="input">
+                                                    <span class="icon is-small is-right">
+                                                        <i class="fa fa-percent"></i>
+                                                    </span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="level">
+                                    <!-- Left side -->
+                                    <div class="level-left is-marginless">
+                                        <div class="level-item">
+                                            <!--                        <p class="number">3</p>-->
+                                            Number of Years
+                                        </div>
+                                    </div>
+
+                                    <!-- Number Of Years Input -->
+                                    <div class="level-right">
+                                        <div class="level-item">
+                                            <div class="field">
+                                                <div class="control has-icons-left">
+                                                    <input v-model="years" class="input">
+                                                    <span class="icon is-small is-right">
+                                                        <i class="fa fa-calendar-alt"></i>
+                                                    </span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                </div>
+
+                                <!-- Do calculations -->
+                                <div class="control">
+                                    <button v-on:click="simpleLoan" class="button is-medium is-fullwidth is-link is-outlined">
+                                        CALCULATE
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+
+
+
+
+                    </div>
+                    <div class="column is-one-quarter">
+                    </div>
+
+                </div>
+            </div>
+
+            <!-- RESULTS -->
+            <br>
+            <div class="container">
+                <h1 class="title ">Results</h1>
+                <div class="columns is-multiline">
+
+                    <div class="column is-one-third">
+                        <div class="notification is-link has-text">
+                            <p id="monthlyPayment" class="title is-2">${{payments}}</p>
+                            <p class="subtitle is-4">Monthly Payments</p>
+                        </div>
+                    </div>
+
+                    <div class="column is-one-third">
+                        <div class="notification is-link has-text">
+                            <p id="totalInterest" class="title is-2">{{totalI}}%</p>
+                            <p class="subtitle is-4">Total Interest</p>
+                        </div>
+                    </div>
+
+                    <div class="column is-one-third">
+                        <div class="notification is-link has-text">
+                            <p id="totalPayment" class="title is-2">${{totalD}}</p>
+                            <p class="subtitle is-4">Total Amount Paid</p>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </section>
+
+    </div>
+    <!--credit-->
+    <footer class="footer">
+        <div class="content has-text-centered">
+            <p>
+                <strong>BusinessCalculators</strong> by <a href="https://www.linkedin.com/in/jacob-guyette-705378141">Jacob Guyette</a>.
+            </p>
+        </div>
+    </footer>
+
+</body>
+<script>
+    var vm = new Vue({
+        el: "#vue-target",
+        data: {
+            years: null,
+            interest: null,
+            principle: null,
+            payments: 0,
+            totalD: 0,
+            totalI: 0
+
+
+
+
+
+        },
+        methods: {
+            simpleLoan: function() {
+                //loan amount
+                let a = this.principle;
+                //monthly rate
+                let r = (this.interest / 100) / 12;
+                //years
+                let n = 12 * this.years;
+
+                //console.log("a: " + a + " r: " + r + " n: " + n);
+                let output = a / (((Math.pow((1 + r), n)) - 1) / (r * (Math.pow((1 + r), n))))
+
+                this.payments = output.toFixed(2);
+                this.totalD = (output * n).toFixed(2);
+                let I = ((((output * n).toFixed(2)) - a) / a) * 100;
+                this.totalI = I.toFixed(2);
+                this.isHidden = !this.isHidden;
+
+
+            },
+        },
+
+
+    });
+
+</script>
+
+</html>
