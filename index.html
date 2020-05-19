@@ -13,11 +13,21 @@
         .navbar-dropdown {
             left: calc(-40%);
         }
+        @media (max-width: 320px) {
+            .section {
+                
+                background-image: url(watch.jpg);
 
-        .section {
-            background-image: url(background.jpg);
-            height: 94vh;
+            }
         }
+        @media (min-width: 400px) {
+            .section {
+                background-image: url(background.jpg);
+                height: 94vh;
+            }
+
+        }
+        
         .footer {
           height: 100px;
           margin-top: -70px;
