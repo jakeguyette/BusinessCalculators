@@ -10,16 +10,16 @@
 
     <script src="https://unpkg.com/vue"></script>
     <style>
-        .navbar-dropdown { 
+        .navbar-dropdown {
             left: calc(-40%);
         }
+
         @media screen and (max-width: 350px) {
-          #CalcMenu {
-            color: white;
-            background-color: white
-          }
+            #CalcMenu {
+                color: white;
+                background-color: white
+            }
         }
-    
     </style>
 
 </head>
@@ -29,9 +29,9 @@
         <!--header with drop down menu for diferent calculators-->
         <nav class="navbar is-link" role="navigation" aria-label="main navigation">
             <div class="navbar-brand">
-                <a class="navbar-item" href = "index.html">
-                    <i class= "fa fa-calculator"></i>&nbsp;&nbsp;
-                    
+                <a class="navbar-item" href="index.html">
+                    <i class="fa fa-calculator"></i>&nbsp;&nbsp;
+
                     <span class="subtitle is-5 has-text-white">BusinessCalculators.com</span>
                 </a>
 
@@ -45,12 +45,12 @@
             <div id="navbarCalc" class="navbar-menu">
                 <div class="navbar-end">
                     <div class="navbar-item has-dropdown is-hoverable">
-                        <a class="navbar-link" id= "CalcMenu">
+                        <a class="navbar-link" id="CalcMenu">
                             <span>Calculators</span>
                         </a>
                         <div class="navbar-dropdown is-boxed">
                             <a class="navbar-item" href="SimpleLoan.html">
-                                Simple Loan 
+                                Simple Loan
                             </a>
                             <a class="navbar-item" href="BondYTM.html">
                                 Yield to Maturity
@@ -105,7 +105,7 @@
                                         <div class="level-item">
                                             <div class="field">
                                                 <div class="control has-icons-left">
-                                                    <input v-model="face" class="input" >
+                                                    <input v-model="face" class="input">
                                                     <span class="icon is-small is-left">
                                                         <i class="fa fa-dollar-sign"></i>
                                                     </span>
@@ -129,15 +129,15 @@
                                             <div class="field">
                                                 <div class="control has-icons-right">
                                                     <input v-model="coupon" class="input">
-                                                        <span class="icon is-small is-right">
+                                                    <span class="icon is-small is-right">
                                                         <i class="fa fa-percent"></i>
-                                                        </span>
+                                                    </span>
                                                 </div>
                                             </div>
                                         </div>
                                     </div>
                                 </div>
-                                
+
                                 <div class="level">
                                     <!-- Left side -->
                                     <div class="level-left is-marginless">
@@ -161,7 +161,7 @@
                                     </div>
 
                                 </div>
-                                
+
                                 <div class="level">
                                     <!-- Left side -->
                                     <div class="level-left is-marginless">
@@ -186,39 +186,39 @@
                                 </div>
 
                                 <div class="level">
-                                <!-- Left side -->
-                                <div class="level-left is-marginless">
-                                    <div class="level-item">
-                                        Current Bond Trading Price
+                                    <!-- Left side -->
+                                    <div class="level-left is-marginless">
+                                        <div class="level-item">
+                                            Current Bond Trading Price
+                                        </div>
                                     </div>
-                                </div>
 
-                                <!-- input payments -->
-                                <div class="level-right">
-                                    <div class="level-item">
-                                        <div class="field">
-                                            <div class="control has-icons-left">
-                                                <input v-model="cprice" class="input">
-                                                <span class="icon is-small is-left">
+                                    <!-- input payments -->
+                                    <div class="level-right">
+                                        <div class="level-item">
+                                            <div class="field">
+                                                <div class="control has-icons-left">
+                                                    <input v-model="cprice" class="input">
                                                     <span class="icon is-small is-left">
-                                                    <i class="fa fa-dollar-sign"></i>
+                                                        <span class="icon is-small is-left">
+                                                            <i class="fa fa-dollar-sign"></i>
+                                                        </span>
                                                     </span>
-                                                </span>
+                                                </div>
                                             </div>
                                         </div>
                                     </div>
+
                                 </div>
 
-                            </div>
-
-                            <!-- Do calculations -->
-                            <div class="control">
-                                <button v-on:click="ytmfunc" class="button is-large is-fullwidth is-link is-outlined">
-                                    CALCULATE
-                                </button>
+                                <!-- Do calculations v-on:click="ytmfunc" -->
+                                <div class="control">
+                                    <button class="button is-large is-fullwidth is-link is-outlined">
+                                        IN PROGRESS
+                                    </button>
+                                </div>
                             </div>
                         </div>
-                    </div>
 
                     </div>
                     <div class="column is-one-quarter">
@@ -240,7 +240,7 @@
                         </div>
                     </div>
 
-                    <div class="column is-one-third">                       
+                    <div class="column is-one-third">
                     </div>
 
                     <div class="column is-one-third">
@@ -252,14 +252,18 @@
 
     </div>
     <!--credit-->
-<footer class="footer">
-    <div class="content has-text-centered">
-        <p>
-            <strong>BusinessCalculators</strong> by <a href="https://www.linkedin.com/in/jacob-guyette-705378141">Jacob Guyette</a>.
-        </p>
-    </div>
-</footer>
+    <footer class="footer">
+        <div class="content has-text-centered">
+            <p>
+                <strong>BusinessCalculators</strong> by <a href="https://www.linkedin.com/in/jacob-guyette-705378141">Jacob Guyette</a>.
+            </p>
+        </div>
+    </footer>
 </body>
+<script src="https://cdn.jsdelivr.net/npm/nerdamer@latest/nerdamer.core.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/nerdamer@latest/Algebra.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/nerdamer@latest/Calculus.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/nerdamer@latest/Solve.js"></script>
 <script>
     var vm = new Vue({
         el: "#vue-target",
@@ -267,50 +271,32 @@
             face: null,
             coupon: null,
             years: null,
-            payments:null,
+            payments: null,
             cprice: null,
             ytm: 0
 
         },
         methods: {
             ytmfunc: function() {
+
+                let fv = this.face;
+                let pv = this.cprice;
+                let Y = this.years;
+                let nper = Y * this.payments
+                let pmt = fv * (this.coupon / 100);
                 
-                let par = this.face;
-                let M = this.face;
-                console.log(n/d)
-                this.ytm = (n/d).toFixed(2);
+                let A = (pmt +((fv-pv)/Y))
+                let B = ((fv+pv)/2);
+                this.ytm = (A/B);
+
+                console.log(this.ytm);
+
+
 
             },
-        },
+        }
+            
 
 
     });
-
-</script>
-
-</html>
-<script>function ytmcalc(){
-        var principal=document.getElementById('principal').value;
-        var mvalue=document.getElementById('mvalue').value;
-        var rate=document.getElementById('rate').value;
-        var ci=document.getElementById('ci').value;
-        var time=document.getElementById('time').value;
-        var irate=document.getElementById('rate').value /(ci*100);
-        var pvalue;
-        if(time < 12/ci) pvalue=0;
-        else pvalue=document.getElementById('principal').value *irate;
-        var yield;
-        yield=(pvalue) * (1)* (Math.pow((1+irate,((time)*ci/12))-1*1)/(irate))+document.getElementById('principal').value*1-mvalue * 1;
-        
-        document.getElementById('yield').value=Math.round (yield*100)/100;
-        
-        document.getElementById('mv').value=Math.round ((yield *12*100 /(time *mvalue))*100)/100+" %";
-        
-        document.getElementById('ayield').value=Math.round(((pvalue) * (1)* (Math.pow((1+irate),((12)*ci/12))-1*1)/(irate))*100)/100;
-        
-        document.getElementById('apyield').value=Math.round((((pvalue) * (1)* (Math.pow((1+irate),((12)*ci/12))-1*1)/(irate))*100/mvalue)*100)/100+" %";
-        
-        document.getElementById('d1').style.display="none";document.getElementById('d2').style.display="block";
-    }
-
-</script>
+</script></html>
