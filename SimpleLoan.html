@@ -13,6 +13,12 @@
         .navbar-dropdown {
             left: calc(-40%);
         }
+         @media screen and (max-width: 800px) {
+              #CalcMenu {
+                color: white;
+                background-color: white;
+              }
+        }
 
     </style>
 
@@ -40,8 +46,8 @@
             <div id="navbarCalc" class="navbar-menu">
                 <div class="navbar-end">
                     <div class="navbar-item has-dropdown is-hoverable">
-                        <a class="navbar-link">
-                            <span class="subtitle is-5 has-text-white">Calculators</span>
+                        <a class="navbar-link" id= "CalcMenu">
+                            <span>Calculators</span>
                         </a>
                         <div class="navbar-dropdown is-boxed">
                             <a class="navbar-item" href="SimpleLoan.html">
