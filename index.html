@@ -13,19 +13,13 @@
         .navbar-dropdown {
             left: calc(-40%);
         }
-        @media (max-width: 320px) {
-            .section {
-                
-                background-image: url(watch.jpg);
+       
+        .visibledevice {display:none; background-image: url(watch.jpg);}
+        .visibledesktop {display:display; background-image: url(background.jpg);height: 94vh;}
 
-            }
-        }
-        @media (min-width: 400px) {
-            .section {
-                background-image: url(background.jpg);
-                height: 94vh;
-            }
-
+        @media (max-width : 320px) {
+            .visibledevice {display:block;}
+            .visibledesktop {display:none;}
         }
         
         .footer {
@@ -103,6 +97,9 @@
                     <div class="subtitle">
                         Select a Calculator From The Dropdown Above
                     </div>
+                    <div class="visibledesktop"></div>
+
+                    <div class="visibledevice"></div>
                 </div>
             </div>
         </div>
