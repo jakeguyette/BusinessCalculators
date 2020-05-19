@@ -189,24 +189,24 @@
                 <h1 class="title ">Results</h1>
                 <div class="columns is-multiline">
 
-                    <div class="column is-one-third">
+                    <div class="column is-one-third is-flex">
                         <div class="notification is-link has-text">
                             <p id="monthlyPayment" class="title is-2">${{payments}}</p>
                             <p class="subtitle is-4">Monthly Payments</p>
                         </div>
                     </div>
 
-                    <div class="column is-one-third">
+                    <div class="column is-one-third is-flex">
                         <div class="notification is-link has-text">
                             <p id="totalInterest" class="title is-2">{{totalI}}%</p>
-                            <p class="subtitle is-4">Total Interest</p>
+                            <p class="subtitle is-4">Total Interest&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</p>
                         </div>
                     </div>
 
-                    <div class="column is-one-third">
+                    <div class="column is-one-third is-flex">
                         <div class="notification is-link has-text">
                             <p id="totalPayment" class="title is-2">${{totalD}}</p>
-                            <p class="subtitle is-4">Total Amount Paid</p>
+                            <p class="subtitle is-4">Total Amount Paid&nbsp;</p>
                         </div>
                     </div>
 
@@ -249,6 +249,15 @@
                 let r = (this.interest / 100) / 12;
                 //years
                 let n = 12 * this.years;
+                //input validation
+                if(isNaN(a) || isNaN(r) || isNaN(n) ){
+                    this.payments =0; this.totalD =0; this.totalI=0;
+                    return;
+                }
+                if(a<0 || r<0 || n<0){
+                    this.payments =0; this.totalD =0; this.totalI=0;
+                    return;
+                }
 
                 //console.log("a: " + a + " r: " + r + " n: " + n);
                 let output = a / (((Math.pow((1 + r), n)) - 1) / (r * (Math.pow((1 + r), n))))
