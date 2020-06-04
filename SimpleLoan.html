@@ -8,25 +8,31 @@
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.8.2/css/bulma.min.css">
     <script defer src="https://use.fontawesome.com/releases/v5.3.1/js/all.js"></script>
 
-    <script src="https://unpkg.com/vue"></script>
     <style>
         .navbar-dropdown {
             left: calc(-40%);
         }
-       @media screen and (max-width: 350px) {
-          #CalcMenu {
-            color: white;
-            background-color: white
-          }
+
+        @media screen and (max-width: 350px) {
+            #CalcMenu {
+                color: white;
+                background-color: white
+            }
         }
+        .bar {
+          fill: hsl(217, 71%, 53%);
+        }
+        .bar2 {
+          fill: hsl(348, 100%, 61%);
+        }
+        
 
     </style>
 
 </head>
-
 <body>
-    <div id="vue-target">
-        <!--header with drop down menu for diferent calculators-->
+   
+    <!--header with drop down menu for diferent calculators-->
         <nav class="navbar is-link" role="navigation" aria-label="main navigation">
             <div class="navbar-brand">
                 <a class="navbar-item" href="index.html">
@@ -46,7 +52,7 @@
             <div id="navbarCalc" class="navbar-menu">
                 <div class="navbar-end">
                     <div class="navbar-item has-dropdown is-hoverable">
-                        <a class="navbar-link" id= "CalcMenu">
+                        <a class="navbar-link" id="CalcMenu">
                             <span>Calculators</span>
                         </a>
                         <div class="navbar-dropdown is-boxed">
@@ -73,7 +79,7 @@
             </div>
         </nav>
 
-
+        
         <!--calculator-->
         <section class="section">
             <div class="level">
@@ -87,6 +93,7 @@
                     </div>
                 </div>
             </div>
+
             <div class="container">
                 <div class="columns">
                     <div class="column is-one-half ">
@@ -105,7 +112,7 @@
                                         <div class="level-item">
                                             <div class="field">
                                                 <div class="control has-icons-left">
-                                                    <input v-model="principle" class="input">
+                                                    <input id="principle" class="input">
                                                     <span class="icon is-small is-left">
                                                         <i class="fa fa-dollar-sign"></i>
                                                     </span>
@@ -130,7 +137,7 @@
                                         <div class="level-item">
                                             <div class="field">
                                                 <div class="control has-icons-right">
-                                                    <input v-model="interest" class="input">
+                                                    <input id="interest" class="input">
                                                     <span class="icon is-small is-right">
                                                         <i class="fa fa-percent"></i>
                                                     </span>
@@ -143,7 +150,7 @@
                                     <!-- Left side -->
                                     <div class="level-left is-marginless">
                                         <div class="level-item">
-                                            <!--                        <p class="number">3</p>-->
+                                            
                                             Number of Years
                                         </div>
                                     </div>
@@ -153,7 +160,7 @@
                                         <div class="level-item">
                                             <div class="field">
                                                 <div class="control has-icons-left">
-                                                    <input v-model="years" class="input">
+                                                    <input id="years" class="input">
                                                     <span class="icon is-small is-left">
                                                         <i class="fa fa-calendar-alt"></i>
                                                     </span>
@@ -164,9 +171,9 @@
 
                                 </div>
 
-                                <!-- Do calculations -->
+                                <!-- Do calculations    -->
                                 <div class="control">
-                                    <button v-on:click="simpleLoan" class="button is-medium is-fullwidth is-link is-outlined">
+                                    <button onclick="clearBox('chart1','chart2')" id ="calc" class="button is-medium is-fullwidth is-link is-outlined">
                                         CALCULATE
                                     </button>
                                 </div>
@@ -186,26 +193,26 @@
             <!-- RESULTS -->
             <br>
             <div class="container">
-                <h1 class="title ">Results</h1>
+                <h1 class="subtitle ">Results</h1>
                 <div class="columns is-multiline">
 
                     <div class="column is-one-third is-flex">
                         <div class="notification is-link has-text">
-                            <p id="monthlyPayment" class="title is-2">${{payments}}</p>
+                            <p id="monthlyPayment" class="title is-2">$0</p>
                             <p class="subtitle is-4">Monthly Payments</p>
                         </div>
                     </div>
 
                     <div class="column is-one-third is-flex">
                         <div class="notification is-link has-text">
-                            <p id="totalInterest" class="title is-2">{{totalI}}%</p>
+                            <p id="totalInterest" class="title is-2">0%</p>
                             <p class="subtitle is-4">Total Interest&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</p>
                         </div>
                     </div>
 
                     <div class="column is-one-third is-flex">
                         <div class="notification is-link has-text">
-                            <p id="totalPayment" class="title is-2">${{totalD}}</p>
+                            <p id="totalPayment" class="title is-2">$0</p>
                             <p class="subtitle is-4">Total Amount Paid&nbsp;</p>
                         </div>
                     </div>
@@ -213,68 +220,33 @@
                 </div>
             </div>
         </section>
-
-    </div>
-    <!--credit-->
-    <footer class="footer">
+        <div class="container">
+            <h1 id = "titlep" class="subtitle"></h1>
+            <div id="chart1" ></div>
+        </div>
+        <div class="container">
+            <h1 id = "titlei" class="subtitle"></h1>
+            <div id="chart2" ></div>
+        </div>
+    
+       <footer class="footer">
         <div class="content has-text-centered">
             <p>
                 <strong>BusinessCalculators</strong> by <a href="https://www.linkedin.com/in/jacob-guyette-705378141">Jacob Guyette</a>.
             </p>
         </div>
     </footer>
-
 </body>
-<script>
-    var vm = new Vue({
-        el: "#vue-target",
-        data: {
-            years: null,
-            interest: null,
-            principle: null,
-            payments: 0,
-            totalD: 0,
-            totalI: 0
 
 
-
-
-
-        },
-        methods: {
-            simpleLoan: function() {
-                //loan amount
-                let a = this.principle;
-                //monthly rate
-                let r = (this.interest / 100) / 12;
-                //years
-                let n = 12 * this.years;
-                //input validation
-                if(isNaN(a) || isNaN(r) || isNaN(n) ){
-                    this.payments =0; this.totalD =0; this.totalI=0;
-                    return;
-                }
-                if(a<0 || r<0 || n<0){
-                    this.payments =0; this.totalD =0; this.totalI=0;
-                    return;
-                }
-
-                //console.log("a: " + a + " r: " + r + " n: " + n);
-                let output = a / (((Math.pow((1 + r), n)) - 1) / (r * (Math.pow((1 + r), n))))
-
-                this.payments = output.toFixed(2);
-                this.totalD = (output * n).toFixed(2);
-                let I = ((((output * n).toFixed(2)) - a) / a) * 100;
-                this.totalI = I.toFixed(2);
-                this.isHidden = !this.isHidden;
-
-
-            },
-        },
-
-
-    });
-
+<script src="https://d3js.org/d3.v5.min.js"></script>
+<script src="charts/principleGraph.js"></script>
+<!--<script src="charts/demo.css"></script>-->
+<script>//used to clear old svg
+function clearBox(chart1, chart2)
+{
+    document.getElementById(chart1).innerHTML = "";
+    document.getElementById(chart2).innerHTML = "";
+}
 </script>
-
 </html>
