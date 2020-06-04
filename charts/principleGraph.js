@@ -46,6 +46,8 @@ function Principle() {
         document.getElementById("totalPayment").innerHTML = "$" + totalD;
 
         let nointerest = principle / n
+        let winterest = totalD/n
+        
         //console.log(nointerest)
 
 
@@ -113,11 +115,16 @@ function Principle() {
         for (i = 0; i <= n; i++) {
             let money = principle - (parseFloat(nointerest) * (i));
             let interest = ((parseFloat(payments)) - (parseFloat(nointerest))).toFixed(2);
+            let moneyi = totalD - (parseFloat(winterest) * (i)) 
+            if(i==n){
+                moneyi = 0
+            }
             //console.log(interest);
             myData.push({
                 Date: (new Date(start)),
                 Money: parseFloat(money),
-                Interest: parseFloat(interest)
+                Interest: parseFloat(interest),
+                Moneyi: moneyi
             });
             start.setMonth(start.getMonth() + 1);
         }
@@ -227,7 +234,7 @@ function Principle() {
         var onMouseOver2 = function (d) {
             console.log("candle has been selected!")
             //html code for custom tool tip
-            var html2 = "<span class='column is-one-fourth is-flex'><span class='notification is-danger has-text'><p class='subtitle is-5'>" + d.Date.toDateString() + "<br>Monthly Interest: $"+d.Interest.toFixed(2)+"<br>Remaining Balance: $"+(parseFloat(d.Money)+parseFloat(d.Interest)).toFixed(2)+"</p><span><span>" 
+            var html2 = "<span class='column is-one-fourth is-flex'><span class='notification is-danger has-text'><p class='subtitle is-5'>" + d.Date.toDateString() + "<br>Monthly Interest: $"+d.Interest.toFixed(2)+"<br>Remaining Balance: $"+(parseFloat(d.Moneyi)).toFixed(2)+"</p><span><span>" 
                 
             ;
             //get html code above into tooltip
@@ -308,26 +315,26 @@ function Principle() {
                 //                    console.log("start")
                 //                    console.log((w/n)-2)
                 //                    console.log("end")
-                return yScale(d.Money + d.Interest);
+                return yScale(d.Moneyi);
             })
             .attr("width", xScale.bandwidth())
 
             .attr("height", function (d) {
-                if (d.Money <= 0) {
+                if (d.Moneyi <= 0) {
                     return 0.1;
                 } else {
-                    let m = d.Interest + d.Money;
+                    //let m = d.Moneyi;
                     //                        console.log(m);
                     //                      console.log(d.Interest);
                     //                        console.log(d.Money);
 
-                    return h - yScale(m);
+                    return h - yScale(d.Moneyi);
 
                 }
 
             })
             .on("mouseover", onMouseOver2)
-            .on("mouseout", onMouseOut2);;
+            .on("mouseout", onMouseOut2);
 
 
 
