@@ -8,6 +8,7 @@
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.8.2/css/bulma.min.css">
     <script defer src="https://use.fontawesome.com/releases/v5.3.1/js/all.js"></script>
 
+<!--
     <style>
         .navbar-dropdown {
             left: calc(-40%);
@@ -28,8 +29,10 @@
         
 
     </style>
+-->
 
 </head>
+<link rel="stylesheet" href="charts/SimpleLoan.css">
 <body>
    
     <!--header with drop down menu for diferent calculators-->
@@ -224,7 +227,9 @@
             <h1 id = "titlep" class="subtitle"></h1>
             <div id="chart1" ></div>
         </div>
+        
         <div class="container">
+            <br>
             <h1 id = "titlei" class="subtitle"></h1>
             <div id="chart2" ></div>
         </div>
@@ -241,7 +246,7 @@
 
 <script src="https://d3js.org/d3.v5.min.js"></script>
 <script src="charts/principleGraph.js"></script>
-<!--<script src="charts/demo.css"></script>-->
+
 <script>//used to clear old svg
 function clearBox(chart1, chart2)
 {

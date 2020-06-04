@@ -1,0 +1,17 @@
+ .navbar-dropdown {
+            left: calc(-40%);
+}
+
+@media screen and (max-width: 350px) {
+    #CalcMenu {
+        color: white;
+        background-color: white
+    }
+}
+.bar {
+  fill: hsl(217, 71%, 53%);
+}
+.bar2 {
+  fill: hsl(348, 100%, 61%);
+}
+

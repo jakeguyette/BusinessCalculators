@@ -58,13 +58,44 @@ function Principle() {
             w = 800 - margin.left - margin.right,
             h = 490 - margin.top - margin.bottom;
 
-
+        var svgContainer = d3.select('#chart1');
         //set size of svg
-        let svg = d3.select("#chart1").append("svg")
+        let svg = svgContainer.append("svg")
             .attr("width", w + margin.left + margin.right)
             .attr("height", h + margin.top + margin.bottom)
             .append("g")
             .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
+        
+        
+        
+        //----------------------------tool tip-------------------------------------------
+        //add initially hidden tool tip to svg
+        var tooltip = svgContainer.append('div');
+        // tooltip mouseover event handler
+        var onMouseOver = function (d) {
+            console.log("candle has been selected!")
+            //html code for custom tool tip
+            var html = "<span class='column is-one-fourth is-flex'><span class='notification is-link has-text'><p class='subtitle is-5'>" + d.Date.toDateString() + "<br>Remaining balance: $"+d.Money.toFixed(2)+"</p><span><span>" 
+                
+            ;
+            //get html code above into tooltip
+            tooltip.html(html)
+                //postion tooltip
+                .style("left", (d3.event.pageX +6) + "px")
+                .style("top", (d3.event.pageY) + "px")
+                .transition()
+                .duration(1) // instant
+                .style("opacity", 1) // now visable
+
+        };
+        // tooltip mouseout event handler
+        var onMouseOut = function () {
+            tooltip.transition()
+                .duration(2000) // 12 seconds until hidden
+                .style("opacity", 0); // now hidden
+        };
+
+//----------------------------create x and y axes----------------------------------
         //set x and y scales
         let yScale = d3.scaleLinear()
             //find min and max of stock prices
@@ -74,7 +105,7 @@ function Principle() {
 
         //console.log("__here__")
         var today = new Date();
-        var start = new Date(today.getFullYear(), (today.getMonth()), 1);
+        var start = new Date(today.getFullYear(), (today.getMonth()), (today.getDate()));
         var myData = []
 
         let i = 0
@@ -103,36 +134,6 @@ function Principle() {
             .padding(0.1);
 
         let yAxis = d3.axisLeft(yScale).ticks(10, "$,f");
-//----------------------------tool tip-------------------------------------------
-        //add initially hidden tool tip to svg
-//        var tooltip = d3.select('#char1').append('div')
-//            .attr('class', 'hidden tooltip')
-//            .style("opacity", 0);
-//        // tooltip mouseover event handler
-//        var onMouseOver = function () {
-//            console.log("bar has been selected!")
-//            //html code for custom tool tip
-//            var html = "<p> hello world </p>";
-//
-//            //get html code above into tooltip
-//            tooltip.html(html)
-//                //postion tooltip
-//                .style("left", (d3.event.pageX + 6) + "px")
-//                .style("top", (d3.event.pageY) + "px")
-//                .transition()
-//                .duration(1) // instant
-//                .style("opacity", 1) // now visable
-//          console.log("done")
-//        };
-//        // tooltip mouseout event handler
-//        var onMouseOut = function () {
-//            tooltip.transition()
-//                .duration(10000) // 12 seconds until hidden
-//                .style("opacity", 0); // now hidden
-//        };
-
-//----------------------------create x and y axes----------------------------------------
-
 
 
         //append axes
@@ -151,7 +152,19 @@ function Principle() {
             .attr("transform", "translate(0," + h + ")")
             //creates xaxis
             .call(d3.axisBottom(xScale)
-                .ticks(n)
+                .tickValues(xScale.domain().filter(function (d, i) {
+                    if(years > 1 && years<=3){
+                      return !(i % 2)  
+                    }
+                    if(years > 3){
+                      return !(i % 4)  
+                    }
+                    else{
+                        return true
+                    }
+                    
+                    
+                }))
                 .tickFormat(d3.timeFormat("%b %Y"))
 
             )
@@ -195,17 +208,44 @@ function Principle() {
                     return h - yScale(d.Money);
                 }
 
-            });
-//            .on("mouseover", onMouseOver)
-//            .on("mouseout", onMouseOut);
+            })
+            .on("mouseover", onMouseOver)
+            .on("mouseout", onMouseOut);
         
 //---------------------------------GRAPH 2-------------------------------------------
+        var svgContainer2 = d3.select('#chart2');
         //set size of svg
-        let svg2 = d3.select("#chart2").append("svg")
+        let svg2 = svgContainer2.append("svg")
             .attr("width", w + margin.left + margin.right)
             .attr("height", h + margin.top + margin.bottom)
             .append("g")
             .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
+        
+        //add initially hidden tool tip to svg
+        var tooltip2 = svgContainer2.append('div');
+        // tooltip mouseover event handler
+        var onMouseOver2 = function (d) {
+            console.log("candle has been selected!")
+            //html code for custom tool tip
+            var html2 = "<span class='column is-one-fourth is-flex'><span class='notification is-danger has-text'><p class='subtitle is-5'>" + d.Date.toDateString() + "<br>Monthly Interest: $"+d.Interest.toFixed(2)+"<br>Remaining Balance: $"+(parseFloat(d.Money)+parseFloat(d.Interest)).toFixed(2)+"</p><span><span>" 
+                
+            ;
+            //get html code above into tooltip
+            tooltip2.html(html2)
+                //postion tooltip
+                .style("left", (d3.event.pageX +6) + "px")
+                .style("top", (d3.event.pageY) + "px")
+                .transition()
+                .duration(1) // instant
+                .style("opacity", 1) // now visable
+
+        };
+        // tooltip mouseout event handler
+        var onMouseOut2 = function () {
+            tooltip.transition()
+                .duration(2000) // 12 seconds until hidden
+                .style("opacity", 0); // now hidden
+        };
 
 
         //append axes
@@ -224,7 +264,19 @@ function Principle() {
             .attr("transform", "translate(0," + h + ")")
             //creates xaxis
             .call(d3.axisBottom(xScale)
-                .ticks(n)
+                .tickValues(xScale.domain().filter(function (d, i) {
+                    if(years > 1 && years<=3){
+                      return !(i % 2)  
+                    }
+                    if(years > 3){
+                      return !(i % 4)  
+                    }
+                    else{
+                        return true
+                    }
+                    
+                    
+                }))
                 .tickFormat(d3.timeFormat("%b %Y"))
 
             )
@@ -273,7 +325,9 @@ function Principle() {
 
                 }
 
-            });
+            })
+            .on("mouseover", onMouseOver2)
+            .on("mouseout", onMouseOut2);;
 
 
 
