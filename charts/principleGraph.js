@@ -111,11 +111,13 @@ function Principle() {
         var myData = []
 
         let i = 0
+        let count = n
         //console.log(n);
         for (i = 0; i <= n; i++) {
             let money = principle - (parseFloat(nointerest) * (i));
-            let interest = ((parseFloat(payments)) - (parseFloat(nointerest))).toFixed(2);
-            let moneyi = totalD - (parseFloat(winterest) * (i)) 
+            let moneyi = totalD - (parseFloat(winterest) * (i))
+            let interest = ((totalD/n) - (principle/n)).toFixed(2);
+            let Tinterest = interest * count
             if(i==n){
                 moneyi = 0
             }
@@ -124,9 +126,11 @@ function Principle() {
                 Date: (new Date(start)),
                 Money: parseFloat(money),
                 Interest: parseFloat(interest),
-                Moneyi: moneyi
+                Moneyi: moneyi,
+                Tinterest: Tinterest
             });
             start.setMonth(start.getMonth() + 1);
+            count--;
         }
 
         console.log(myData)
@@ -335,14 +339,140 @@ function Principle() {
             })
             .on("mouseover", onMouseOver2)
             .on("mouseout", onMouseOut2);
+//--------------------------------GRAPH 3--------------------------------------------
+        var svgContainer3 = d3.select('#chart3');
+        //set size of svg
+        let svg3 = svgContainer3.append("svg")
+            .attr("width", w + margin.left + margin.right)
+            .attr("height", h + margin.top + margin.bottom)
+            .append("g")
+            .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
+                //append axes
+        // add Y axis 
+        svg3.append("g")
+            .attr("class", "axis")
+            //position yaxis
+            .attr("transform", "translate(50,0)")
+            //creates yaxis
+            .call(yAxis);
 
+        // add X axis with ticks every 6 business days
+        svg3.append("g")
+            .attr("class", "axis")
+            //position xaxis
+            .attr("transform", "translate(0," + h + ")")
+            //creates xaxis
+            .call(d3.axisBottom(xScale)
+                .tickValues(xScale.domain().filter(function (d, i) {
+                    if(years > 1 && years<=3){
+                      return !(i % 2)  
+                    }
+                    if(years > 3){
+                      return !(i % 4)  
+                    }
+                    else{
+                        return true
+                    }
+                    
+                    
+                }))
+                .tickFormat(d3.timeFormat("%b %Y"))
 
+            )
 
+            //rotate labels for better readability
+            .selectAll("text")
+            .attr("y", 0)
+            .attr("x", 9)
+            .attr("dy", ".35em")
+            .attr("transform", "rotate(70)")
+            .style("text-anchor", "start");
+        
+        console.log(myData)
+        
+        //console.log(d3.keys(myData));
+        var z = d3.scaleOrdinal()
+        .range(['hsl(217, 71%, 53%)','hsl(348, 100%, 61%)']);
+        
+      var keys = [];
+      for (key in myData[0]){
+        if (key != "Date" && key != "Moneyi" && key != "Interest" )
+          keys.push(key);
+      }
+        
+    console.log(keys);
+      myData.forEach(function(d){
+        d.total = 0;
+        keys.forEach(function(k){
+          d.total += d[k];
+        })
+      });
+
+      z.domain(keys);
+        
+    svg3.append("g")
+        .selectAll("g")
+        .data(d3.stack().keys(keys)(myData))
+        .enter().append("g")
+        .attr("fill", function(d) {
+          return z(d.key);
+        })
+        .selectAll("rect")
+        .data(function(d) {
+          return d;
+        })
+        .enter().append("rect")
+        .attr("x", function(d) {
+          return xScale(d.data.Date);
+        })
+        .attr("y", function(d) {
+           console.log(yScale(d[1]));
+           return yScale((d[1]));
+        })
+        .attr("height", function(d) {
+          //console.log(yScale(d[0]))
+          //console.log(parseFloat(yScale(d[1]))+":");
+          console.log(yScale(d[0]) - yScale(parseFloat(d[1])));
+          return yScale(d[0]) - yScale(parseFloat(d[1]));
+        })
+        .attr("width", xScale.bandwidth());
+        
+        var legend = svg3.append("g")
+            .attr("font-family", "sans-serif")
+            .attr("font-size", 10)
+            .attr("text-anchor", "end")
+            .selectAll("g")
+            .data(keys.slice().reverse())
+            .enter().append("g")
+            .attr("transform", function(d, i) {
+              return "translate(0," + i * 20 + ")";
+            });
+
+        legend.append("rect")
+            .attr("x", w - 30)
+            .attr("width", 21)
+            .attr("height", 21)
+            .attr("fill", z);
+
+        legend.append("text")
+        .attr("x", w - 35)
+        .attr("y", 9.5)
+        .attr("dy", "0.32em")
+        .text(function(d,i) {
+          if (i==0){
+              return "Principle"
+          }
+          else{
+              return "Interest"
+          }
+        });
+        
 
 
         //set headers for charts
-        document.getElementById("titlei").innerHTML = "Interest + Principle";
-        document.getElementById("titlep").innerHTML = "Principle";
+        document.getElementById("titleip").innerHTML = "Loan Summary";
+        document.getElementById("titlei").innerHTML = interest+"% APR";
+        document.getElementById("titlep").innerHTML = "0% APR";
     });
 
 
