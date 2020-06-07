@@ -155,7 +155,7 @@
 
                                 <!-- Do calculations    -->
                                 <div class="control">
-                                    <button onclick="clearBox('chart1','chart2','chart3')" id ="calc" class="button is-medium is-fullwidth is-link is-outlined">
+                                    <button onclick="clearBox('chart3')" id ="calc" class="button is-medium is-fullwidth is-link is-outlined">
                                         CALCULATE
                                     </button>
                                 </div>
@@ -202,20 +202,11 @@
                 </div>
             </div>
         </section>
-        <div class="container">
-            <h1 id = "titlep" class="subtitle"></h1>
-            <div id="chart1" ></div>
-        </div>
-        
-        <div class="container">
-            <br>
-            <h1 id = "titlei" class="subtitle"></h1>
-            <div id="chart2" ></div>
-        </div>
+
     
         <div class="container">
             <br>
-            <h1 id = "titleip" class="subtitle"></h1>
+            <span id = "titleip" class="subtitle"></span>
             <div id="chart3" ></div>
         </div>
     
@@ -233,11 +224,9 @@
 <script src="charts/principleGraph.js"></script>
 
 <script>//used to clear old svg
-function clearBox(chart1, chart2,chart3)
-{
-    document.getElementById(chart1).innerHTML = "";
-    document.getElementById(chart2).innerHTML = "";
-    document.getElementById(chart3).innerHTML = "";
-}
+    function clearBox(chart3){
+
+        document.getElementById(chart3).innerHTML = "";
+    }
 </script>
 </html>
