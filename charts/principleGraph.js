@@ -78,6 +78,12 @@ function Principle() {
             if(years == ""){
                 document.getElementById("years").className = "input is-danger"; 
             }
+            //clear titles
+            document.getElementById("payoff").innerHTML = ""
+            document.getElementById("monthlyPayment").innerHTML ="$" + 0;
+            document.getElementById("totalInterest").innerHTML = "$" +0;
+            document.getElementById("totalPayment").innerHTML = 0+"%";
+            document.getElementById("titleip").innerHTML = "";
             return
         }
         //set headers for charts
