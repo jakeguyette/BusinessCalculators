@@ -5,10 +5,54 @@
 
 //Jacob Guyette
 
+const pcheck = document.getElementById('principle');
+const icheck = document.getElementById('interest');
+const ycheck = document.getElementById('years');
 
+pcheck.addEventListener('input', check1);
+icheck.addEventListener('input', check2);
+ycheck.addEventListener('input', check3);
+
+ //input validation
+   function check1() {
+        var principle = document.getElementById("principle").value
+           
+            if((principle<=0 || isNaN(principle)) && principle !== ""){
+                document.getElementById("principle").className = "input is-danger"; 
+                
+            }
+            else{
+                document.getElementById("principle").className = "input";
+            }
+        return
+    }
+     function check2() {
+        var interest = document.getElementById("interest").value
+           
+            if((interest<=0 || isNaN(interest)) && interest !== ""){
+                document.getElementById("interest").className = "input is-danger"; 
+                
+            }
+            else{
+                document.getElementById("interest").className = "input";
+            }
+        return
+    }
+     function check3() {
+        var years = document.getElementById("years").value
+        console.log("hi")
+            if((years<=0 || isNaN(years)) && years !== ""){
+                document.getElementById("years").className = "input is-danger"; 
+                
+            }
+            else{
+                document.getElementById("years").className = "input";
+            }
+         return    
+    }
 
 function Principle() {
-
+   
 
     // create Principle chart 
     // when the input range changes update value 
@@ -17,8 +61,27 @@ function Principle() {
         var principle = document.getElementById("principle").value
         var interest = document.getElementById("interest").value
         var years = document.getElementById("years").value
-        //console.log("__here__")
-        //console.log(principle+" "+interest+" "+years);
+        
+        //reset input 
+        document.getElementById("principle").className = "input"; 
+        document.getElementById("interest").className = "input"; 
+        document.getElementById("years").className = "input"; 
+        
+        //exit if invalid params
+        if(principle <=0 || interest<=0 || years<=0 ||isNaN(principle)||isNaN(interest)||isNaN(years)){   
+            if(principle == ""){
+                document.getElementById("principle").className = "input is-danger"; 
+            }
+            if(interest == ""){
+                document.getElementById("interest").className = "input is-danger"; 
+            }
+            if(years == ""){
+                document.getElementById("years").className = "input is-danger"; 
+            }
+            return
+        }
+         
+        
         //calculate
         //values to return
         let payments = 0;
@@ -54,8 +117,8 @@ function Principle() {
         let margin = {
                 top: 15,
                 right: 70,
-                bottom: 80,
-                left: 50
+                bottom: 53,
+                left: 70
             },
             w = 800 - margin.left - margin.right,
             h = 490 - margin.top - margin.bottom;
@@ -85,18 +148,17 @@ function Principle() {
             //console.log(d[1])
             //console.log("here"+d[0])
             var html = "";
-            if (d[0] == 0) {
+           if (d[0] == 0) {
                 //html code principle tooltip
-                html = "<span class='column is-one-fourth is-flex' id= 'tip'><span class='notification is-link has-text'><p class='subtitle is-5'>" + Date + "<br>Remaining Principle: $" + P +
-                    "</p><span><span>"
+                html = "<div class='level' id='tip'><div class='level-item'><div class='notification is-link '><p  class='subtitle is-5'><b>"+Date+"</b></p><p></p><p class='subtitle is-5'>Remaining Principle: $"+P+"</p></div></div></div>"
 
                 ;
             } else {
                 //html code interest tooltip
-                html = "<span class='column is-one-fourth is-flex' id= 'tip'><span class='notification is-danger has-text'><span class='subtitle is-5'>" + Date + "<br>Remaining Interest: $" + I + "<br>Remaining Debt: $" +
-                    debt + "</span><span><span>"
+                html = "<div class='level' id='tip'><div class='level-item'><div class='notification is-danger '><p  class='subtitle is-5'><b>"+Date+"</b></p><p></p><p class='subtitle is-5'>Remaining Interest: $"+I+"</p><p class='subtitle is-5'>Remaining Debt: $"+debt+"</p></div></div></div>"
 
                 ;
+
             }
             //get html code above into tooltip
             tooltip.html(html)
@@ -111,10 +173,12 @@ function Principle() {
         // tooltip mouseout event handler
         var onMouseOut = function () {
             tooltip.transition()
-                .duration(2000) // 12 seconds until hidden
-                .style("opacity", 0); // now hidden
+                .duration(1000) // 12 seconds until hidden
+                .style("opacity", 0) // now hidden
+                .on("end", function () {
+                    document.getElementById("tip").innerHTML = ""; 
+                });
             
-            //document.getElementById("tip").innerHTML = ""; 
         };
 
         //----------------------------create x and y axes----------------------------------
@@ -161,7 +225,7 @@ function Principle() {
                 return d.Date;
 
             }))
-            .range([margin.left, w])
+            .range([0, w])
             .padding(0.1);
 
         let yAxis = d3.axisLeft(yScale).ticks(10, "$,f");
@@ -170,7 +234,7 @@ function Principle() {
         svg.append("g")
             .attr("class", "axis")
             //position yaxis
-            .attr("transform", "translate(50,0)")
+            .attr("transform", "translate(0,0)")
             //creates yaxis
             .call(yAxis);
 
@@ -292,8 +356,8 @@ function Principle() {
         //source: https://bl.ocks.org/johnwalley/e1d256b81e51da68f7feb632a53c3518
           // Time
           
-        
-         var dataTime = d3.range(0,years).map(function(d) {
+        if(years>=2){
+         var dataTime = d3.range(1,(parseFloat(years)+1)).map(function(d) {
             
             return new Date(today.getFullYear() + d, (today.getMonth()), (today.getDate()));
           });
@@ -324,9 +388,9 @@ function Principle() {
             //console.log(yearsUpdate)
               //update graph if year changes
               if (d3.timeFormat('%Y')(val) != current){
-                 update(yearsUpdate, totalD);   
+                 update(yearsUpdate-1, totalD);   
               }
-              current = d3.timeFormat('%Y')(val)
+              current = d3.timeFormat('%Y')(val) 
             });
 
           var gTime = d3
@@ -335,12 +399,13 @@ function Principle() {
             .attr('width', 800)
             .attr('height', 100)
             .append('g')
-            .attr('transform', 'translate(13,30)');
+            .attr('transform', 'translate(110,30)');
 
           gTime.call(sliderTime);
 
           d3.select('p#value-time').text(d3.timeFormat('%Y')(sliderTime.value()));
-        
+        document.getElementById("payoff").innerHTML = "Find out how much you can save by paying off your loan early";
+        }
        
         
 
@@ -349,7 +414,7 @@ function Principle() {
         //set headers for charts
         document.getElementById("titleip").innerHTML = years + " Year" + " Loan Summary(" +
             interest + "% APR)";
-        document.getElementById("payoff").innerHTML = "Find out how much you can save by paying off your loan early";
+        
         
 
     });
@@ -391,10 +456,10 @@ function Principle() {
         //calculate savings
         var savings = (parseFloat(oldtotal - totalD)).toFixed(2);
         if (savings == 0){
-           document.getElementById("save").innerHTML = "<br>"; 
+           document.getElementById("save").innerHTML = ""; 
         }
         else{
-            document.getElementById("save").innerHTML = "You saved $" + savings+"!";
+            document.getElementById("save").innerHTML = "You will save $<b>" + savings+" </b> in interest!";
         }
         
         
@@ -412,8 +477,8 @@ function Principle() {
         let margin = {
                 top: 15,
                 right: 70,
-                bottom: 80,
-                left: 50
+                bottom: 53,
+                left: 70
             },
             w = 800 - margin.left - margin.right,
             h = 490 - margin.top - margin.bottom;
@@ -445,14 +510,12 @@ function Principle() {
             var html = "";
             if (d[0] == 0) {
                 //html code principle tooltip
-                html = "<span class='column is-one-fourth is-flex'><span class='notification is-link has-text'><p class='subtitle is-5'>" + Date + "<br>Remaining Principle: $" + P +
-                    "</p><span><span>"
+                html = "<div class='level' id='tip'><div class='level-item'><div class='notification is-link '><p  class='subtitle is-5'><b>"+Date+"</b></p><p></p><p class='subtitle is-5'>Remaining Principle: $"+P+"</p></div></div></div>"
 
                 ;
             } else {
                 //html code interest tooltip
-                html = "<span class='column is-one-fourth is-flex'><span class='notification is-danger has-text'><p class='subtitle is-5'>" + Date + "<br>Remaining Interest: $" + I + "<br>Remaining Debt: $" +
-                    debt + "</p><span><span>"
+                html = "<div class='level' id='tip'><div class='level-item'><div class='notification is-danger'><p  class='subtitle is-5'><b>"+Date+"</b></p><p></p><p class='subtitle is-5'>Remaining Interest: $"+I+"</p><p class='subtitle is-5'>Remaining Debt: $"+debt+"</p></div></div></div>"
 
                 ;
             }
@@ -469,8 +532,11 @@ function Principle() {
         // tooltip mouseout event handler
         var onMouseOut = function () {
             tooltip.transition()
-                .duration(2000) // 12 seconds until hidden
-                .style("opacity", 0); // now hidden
+                .duration(1000) // 12 seconds until hidden
+                .style("opacity", 0) // now hidden
+                .on("end", function () {
+                    document.getElementById("tip").innerHTML = ""; 
+                });
         };
 
         //----------------------------create x and y axes----------------------------------
@@ -517,7 +583,7 @@ function Principle() {
                 return d.Date;
 
             }))
-            .range([margin.left, w])
+            .range([0, w])
             .padding(0.1);
 
         let yAxis = d3.axisLeft(yScale).ticks(10, "$,f");
@@ -526,7 +592,7 @@ function Principle() {
         svg.append("g")
             .attr("class", "axis")
             //position yaxis
-            .attr("transform", "translate(50,0)")
+            .attr("transform", "translate(0,0)")
             //creates yaxis
             .call(yAxis);
 
