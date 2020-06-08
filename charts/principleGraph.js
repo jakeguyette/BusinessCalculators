@@ -29,7 +29,7 @@ ycheck.addEventListener('input', check3);
      function check2() {
         var interest = document.getElementById("interest").value
            
-            if((interest<=0 || isNaN(interest)) && interest !== ""){
+            if((interest<0 || isNaN(interest)) && interest !== ""){
                 document.getElementById("interest").className = "input is-danger"; 
                 
             }
@@ -68,7 +68,7 @@ function Principle() {
         document.getElementById("years").className = "input"; 
         
         //exit if invalid params
-        if(principle <=0 || interest<=0 || years<=0 ||isNaN(principle)||isNaN(interest)||isNaN(years)){   
+        if(principle <=0 || interest<0 || years<=0 ||isNaN(principle)||isNaN(interest)||isNaN(years)){   
             if(principle == ""){
                 document.getElementById("principle").className = "input is-danger"; 
             }
@@ -80,7 +80,12 @@ function Principle() {
             }
             return
         }
-         
+        //set headers for charts
+        document.getElementById("titleip").innerHTML = years + " Year" + " Loan Summary(" +
+            interest + "% APR)";
+        if(interest == 0){
+            interest = 0.000000001
+        }
         
         //calculate
         //values to return
@@ -101,11 +106,13 @@ function Principle() {
         totalD = (output * n).toFixed(2);
         let I = ((((output * n).toFixed(2)) - a) / a) * 100;
         totalI = I.toFixed(2);
-
+        if(interest == 0.000000001){
+            totalD = principle
+        }
         //console.log(payments+" "+totalD+" "+totalI);
         //send back computed
         document.getElementById("monthlyPayment").innerHTML = "$" + payments;
-        document.getElementById("totalInterest").innerHTML = totalI + "%";
+        document.getElementById("totalInterest").innerHTML = Math.abs(totalI) + "%";
         document.getElementById("totalPayment").innerHTML = "$" + totalD;
 
         let nointerest = principle / n
@@ -315,7 +322,11 @@ function Principle() {
                 return yScale((d[1]));
             })
             .attr("height", function (d) {
-                return yScale(d[0]) - yScale(parseFloat(d[1]));
+                let hb = yScale(d[0]) - yScale(parseFloat(d[1]))
+                if (hb >0){
+                    return hb;
+                }
+                
             })
             .attr("width", xScale.bandwidth())
 
@@ -411,9 +422,6 @@ function Principle() {
 
         //----------------------------set graph title----------------------------------        
 
-        //set headers for charts
-        document.getElementById("titleip").innerHTML = years + " Year" + " Loan Summary(" +
-            interest + "% APR)";
         
         
 
@@ -431,8 +439,12 @@ function Principle() {
         var principle = document.getElementById("principle").value
         var interest = document.getElementById("interest").value
         
-        //console.log("__here__")
-        //console.log(principle+" "+interest+" "+years);
+        //set headers for charts
+        document.getElementById("titleip").innerHTML = years + " Year" + " Loan Summary(" +
+            interest + "% APR)";
+        if(interest == 0){
+            interest = 0.000000001
+        }
         //calculate
         //values to return
         let payments = 0;
@@ -462,10 +474,12 @@ function Principle() {
             document.getElementById("save").innerHTML = "You will save $<b>" + savings+" </b> in interest!";
         }
         
-        
+        if(interest == 0.000000001){
+            totalD = principle
+        }
         //send back computed
         document.getElementById("monthlyPayment").innerHTML = "$" + payments;
-        document.getElementById("totalInterest").innerHTML = totalI + "%";
+        document.getElementById("totalInterest").innerHTML = Math.abs(totalI) + "%";
         document.getElementById("totalPayment").innerHTML = "$" + totalD;
 
         let nointerest = principle / n
@@ -673,10 +687,10 @@ function Principle() {
                 return yScale((d[1]));
             })
             .attr("height", function (d) {
-                //console.log(yScale(d[0]))
-                //console.log(parseFloat(yScale(d[1]))+":");
-                //console.log(yScale(d[0]) - yScale(parseFloat(d[1])));
-                return yScale(d[0]) - yScale(parseFloat(d[1]));
+                let hb = yScale(d[0]) - yScale(parseFloat(d[1]))
+                if (hb >0){
+                    return hb;
+                }
             })
             .attr("width", xScale.bandwidth())
 
@@ -713,9 +727,7 @@ function Principle() {
                     return "Principle"
                 }
             });
-        //update headers for charts
-        document.getElementById("titleip").innerHTML = years + " Year" + " Loan Summary(" +
-            interest + "% APR)";
+        
         document.getElementById("payoff").innerHTML = "Find out how much you can save by paying off your loan early";     
         
     }
