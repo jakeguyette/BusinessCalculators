@@ -155,7 +155,7 @@
 
                                 <!-- Do calculations    -->
                                 <div class="control">
-                                    <button onclick="clearBox('chart3')" id ="calc" class="button is-medium is-fullwidth is-link is-outlined">
+                                    <button onclick="clearBox('chart3','slider-time')" id ="calc" class="button is-medium is-fullwidth is-link is-outlined">
                                         CALCULATE
                                     </button>
                                 </div>
@@ -202,12 +202,18 @@
                 </div>
             </div>
         </section>
+    
 
     
         <div class="container">
-            <br>
             <span id = "titleip" class="subtitle"></span>
             <div id="chart3" ></div>
+            <h1 class="subtitle " id="payoff"></h1>
+            <div class="row align-items-center">
+                <div class="col-sm"><div id="slider-time"></div></div>
+            </div>
+            <h1 class="subtitle " id="save"><br></h1>
+            <br>
         </div>
     
        <footer class="footer">
@@ -221,11 +227,12 @@
 
 
 <script src="https://d3js.org/d3.v5.min.js"></script>
+<script src="https://unpkg.com/d3-simple-slider"></script>
 <script src="charts/principleGraph.js"></script>
 
 <script>//used to clear old svg
-    function clearBox(chart3){
-
+    function clearBox(chart3, slidertime){
+        document.getElementById(slidertime).innerHTML = "";
         document.getElementById(chart3).innerHTML = "";
     }
 </script>
