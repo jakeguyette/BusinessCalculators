@@ -62,10 +62,7 @@ function Principle() {
         var interest = document.getElementById("interest").value
         var years = document.getElementById("years").value
         
-        //reset input 
-        document.getElementById("principle").className = "input"; 
-        document.getElementById("interest").className = "input"; 
-        document.getElementById("years").className = "input"; 
+        
         
         //exit if invalid params
         if(principle <=0 || interest<0 || years<=0 ||isNaN(principle)||isNaN(interest)||isNaN(years)){   
@@ -86,6 +83,10 @@ function Principle() {
             document.getElementById("titleip").innerHTML = "";
             return
         }
+        //reset input 
+        document.getElementById("principle").className = "input"; 
+        document.getElementById("interest").className = "input"; 
+        document.getElementById("years").className = "input"; 
         //set headers for charts
         document.getElementById("titleip").innerHTML = years + " Year" + " Loan Summary(" +
             interest + "% APR)";
