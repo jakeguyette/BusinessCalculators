@@ -25,7 +25,7 @@
 </head>
 
 <body>
-    <div id="vue-target">
+    
         <!--header with drop down menu for diferent calculators-->
         <nav class="navbar is-link" role="navigation" aria-label="main navigation">
             <div class="navbar-brand">
@@ -73,7 +73,7 @@
                 <div class="container">
 
                     <div class="content">
-                        <h1>Yield to Maturity (YTM) Calculator</h1>
+                        <div class="title">Yield to Maturity Calculator</div>
                         <div class="subtitle">
                             The YTM Calculator will determine the annual return of a bond that is held until maturity.
                         </div>
@@ -85,27 +85,52 @@
                     <div class="column is-one-half ">
                         <div class="box has-background-light">
                             <div class="">
-                                <div class="level">
+                                 <div class="level">
                                     <!-- Left side -->
                                     <div class="level-left is-marginless">
                                         <div class="level-item">
-                                            <!--                        <p class="number">1</p>-->
+                                            Current Bond Trading Price
+                                        </div>
+                                    </div>
+
+                                    <!-- input payments -->
+                                    <div class="level-right">
+                                        <div class="level-item">
+                                            <div class="field">
+                                                <div class="control has-icons-left">
+                                                    <input id="price" class="input">
+                                                    <span class="icon is-small is-left">
+                                                        <span class="icon is-small is-left">
+                                                            <i class="fa fa-dollar-sign"></i>
+                                                        </span>
+                                                    </span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                </div>
+                                <div class="level">
+                                    <!-- Left side -->
+                                    <div class="level-left is-marginless">
+                                        <div class="level-item">                      
                                             Face Value
                                         </div>
                                     </div>
 
                                     <!-- Face Value Input -->
                                     <div class="level-right">
-                                        <div class="level-item">
-                                            <div class="field">
-                                                <div class="control has-icons-left">
-                                                    <input v-model="face" class="input">
-                                                    <span class="icon is-small is-left">
-                                                        <i class="fa fa-dollar-sign"></i>
-                                                    </span>
-                                                </div>
+                                         <div class="level-item">
+                                        <div class="field">
+                                            <div class="control has-icons-left">
+                                                <input id="face_value" class="input">
+                                                <span class="icon is-small is-left">
+                                                    <i class="fa fa-dollar-sign"></i>
+                                                </span>
                                             </div>
                                         </div>
+                                    </div>
+
                                     </div>
                                 </div>
 
@@ -120,9 +145,10 @@
                                     <!-- coupon rate Input -->
                                     <div class="level-right">
                                         <div class="level-item">
+                                            
                                             <div class="field">
                                                 <div class="control has-icons-right">
-                                                    <input v-model="coupon" class="input">
+                                                    <input id="coupon_rate" class="input">
                                                     <span class="icon is-small is-right">
                                                         <i class="fa fa-percent"></i>
                                                     </span>
@@ -145,7 +171,7 @@
                                         <div class="level-item">
                                             <div class="field">
                                                 <div class="control has-icons-left">
-                                                    <input v-model="years" class="input">
+                                                    <input id="years" class="input">
                                                     <span class="icon is-small is-left">
                                                         <i class="fa fa-calendar-alt"></i>
                                                     </span>
@@ -160,7 +186,7 @@
                                     <!-- Left side -->
                                     <div class="level-left is-marginless">
                                         <div class="level-item">
-                                            Coupon Payments per Year
+                                            Payments per Year
                                         </div>
                                     </div>
 
@@ -168,47 +194,29 @@
                                     <div class="level-right">
                                         <div class="level-item">
                                             <div class="field">
-                                                <div class="control has-icons-left">
-                                                    <input v-model="payments" class="input">
-                                                    <span class="icon is-small is-left">
-                                                        <i class="fa fa-money-bill"></i>
-                                                    </span>
+                                              
+                                              <div class="control is-expanded">
+                                                <div class="select is-fullwidth">
+                                                  <select id = "numPayments">
+                                                    <option>Annually</option>
+                                                    <option>Semiannually</option>
+                                                    <option>Quarterly</option>
+                                                    <option>Monthly</option>
+                                                  </select>
                                                 </div>
+                                              </div>
                                             </div>
+
                                         </div>
                                     </div>
                                 </div>
 
-                                <div class="level">
-                                    <!-- Left side -->
-                                    <div class="level-left is-marginless">
-                                        <div class="level-item">
-                                            Current Bond Trading Price
-                                        </div>
-                                    </div>
-
-                                    <!-- input payments -->
-                                    <div class="level-right">
-                                        <div class="level-item">
-                                            <div class="field">
-                                                <div class="control has-icons-left">
-                                                    <input v-model="cprice" class="input">
-                                                    <span class="icon is-small is-left">
-                                                        <span class="icon is-small is-left">
-                                                            <i class="fa fa-dollar-sign"></i>
-                                                        </span>
-                                                    </span>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-
-                                </div>
+                    
 
                                 <!-- Do calculations v-on:click="ytmfunc" -->
                                 <div class="control">
-                                    <button class="button is-large is-fullwidth is-link is-outlined">
-                                        IN PROGRESS
+                                    <button class="button is-large is-fullwidth is-link is-outlined" id ="calc">
+                                        CALCULATE YTM
                                     </button>
                                 </div>
                             </div>
@@ -229,7 +237,7 @@
 
                     <div class="column is-one-third">
                         <div class="notification is-link has-text">
-                            <p id="YTM" class="title is-2">{{ytm}}%</p>
+                            <p id="YTM" class="title is-2">0%</p>
                             <p class="subtitle is-4">Yield to Maturity</p>
                         </div>
                     </div>
@@ -244,7 +252,7 @@
             </div>
         </section>
 
-    </div>
+    
     <!--credit-->
     <footer class="footer">
         <div class="content has-text-centered">
@@ -254,43 +262,7 @@
         </div>
     </footer>
 </body>
-<script src="https://cdn.jsdelivr.net/npm/nerdamer@latest/nerdamer.core.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/nerdamer@latest/Algebra.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/nerdamer@latest/Calculus.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/nerdamer@latest/Solve.js"></script>
-<script>
-    var vm = new Vue({
-        el: "#vue-target",
-        data: {
-            face: null,
-            coupon: null,
-            years: null,
-            payments: null,
-            cprice: null,
-            ytm: 0
+    <script src="https://d3js.org/d3.v5.min.js"></script>
+    <script src="Calculator/bondCalc.js"></script>
 
-        },
-        methods: {
-            ytmfunc: function() {
-
-                let fv = this.face;
-                let pv = this.cprice;
-                let Y = this.years;
-                let nper = Y * this.payments
-                let pmt = fv * (this.coupon / 100);
-                
-                let A = (pmt +((fv-pv)/Y))
-                let B = ((fv+pv)/2);
-                this.ytm = (A/B);
-
-                console.log(this.ytm);
-
-
-
-            },
-        }
-            
-
-
-    });
-</script></html>
+</html>

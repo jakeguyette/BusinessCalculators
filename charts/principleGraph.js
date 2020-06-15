@@ -330,6 +330,7 @@ function Principle() {
             })
             .attr("height", function (d) {
                 let hb = yScale(d[0]) - yScale(parseFloat(d[1]))
+                
                 if (hb >0){
                     return hb;
                 }
@@ -401,11 +402,14 @@ function Principle() {
             }))
             .default(start)
             .on('onchange', val => {
+              //set new postion of slider
               d3.select('p#value-time').text(d3.timeFormat('%Y')(val))
+                
               var yearsUpdate = parseFloat(d3.timeFormat('%Y')(sliderTime.value()))- parseFloat(today.getFullYear()) + 1
             //console.log(yearsUpdate)
               //update graph if year changes
               if (d3.timeFormat('%Y')(val) != current){
+                  
                  update(yearsUpdate-1, totalD);   
               }
               current = d3.timeFormat('%Y')(val) 
